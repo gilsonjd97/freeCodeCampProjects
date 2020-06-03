@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+ 	<head>
+ 		<meta charset="utf-8">
+		<title></title>
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		  
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+
+	</head>
+	
+	<body> 
+  
+  <header>
+    <h1 id="title">Discover what's out there</h1>
+    <p id="description">
+      We really appreciate for you choosing us for your travel plans. To help us improve, we'd like to ask you a few questions. Your answers will help us make even better for you and other people.
+    </p>
+  </header>
+
+  <div class="container">
+  
+    <form id="survey-form">
+      <div class="form-group">
+        <label id="name-label" for="name">Name<em>&#x2a;</em></label>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name" required />
+      </div>
+      
+      <div class="form-group">
+        <label id="email-label" for="email">Email<em>&#x2a;</em></label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email" required />
+      </div>
+
+      <div class="form-group">
+        <label id="number-label" for="number">Age
+        <span class="clue">(optional)</span>
+        </label>
+        <input type="number" name="age" id="number" class="form-control" placeholder="Age" />
+      </div>
+
+      <div class="form-group">
+        <label id="travel-label" for="travel">Which is your favorite vacation destination?<em>&#x2a;</em></label>
+        <input type="text" name="travel" id="travel" class="form-control" placeholder="Enter your favorite vacation destination" required />
+      </div>
+
+      <div class="form-group">
+        <p>How important is cost when choosing a vacation destination?<em>&#x2a;</em></p>
+        <select id="dropdown" name="role" class="form-control" required>
+          <option disabled selected value>Select one</option>
+          <option value="student">Extremely important</option>
+          <option value="job">Very important</option>
+          <option value="learner">Moderately important</option>
+          <option value="preferNo">Slightly important</option>
+          <option value="other">Not at all important</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <p>How would you prefer to travel?</p>
+        <label>
+          <input name="prefer-travel" value="plane"  type="radio" class="input-radio" checked />
+          Plane
+        </label>
+        <label>
+          <input name="prefer-travel" value="boat"  type="radio" class="input-radio" checked />
+          Boat
+        </label>
+        <label>
+          <input name="prefer-travel" value="train"  type="radio" class="input-radio" checked />
+          Train
+        </label>
+        <label>
+          <input name="prefer-travel" value="car"  type="radio" class="input-radio" checked />
+          Car
+        </label>
+      </div>
+
+      <div class="form-group">
+        <p>
+          What is your favorite continent?<em>&#x2a;</em>
+        </p>
+        <select id="favorite-continent" name="favoriteContinent" class="form-control" required>
+          <option disabled selected value>Select One</option>
+          <option value="europe">Europe</option>
+          <option value="nortAmerica">North America</option>
+          <option value="southAmerica">South America</option>
+          <option value="oceania">Oceania</option>
+          <option value="asia">Asia</option>
+          <option value="africa">Africa</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <p>
+          What would be your favourite destinations?
+          <span class="clue">(Check all you prefer)</span>
+        </p>
+
+        <label>
+          <input name="prefer" value="paris" type="checkbox" class="input-checkbox"/>
+          Paris
+        </label>
+        <label>
+          <input name="prefer" value="roma" type="checkbox" class="input-checkbox"/>
+          Roma
+        </label>
+        <label>
+          <input name="prefer" value="london" type="checkbox" class="input-checkbox"/>
+          London
+        </label>
+         <label>
+          <input name="prefer" value="sydney" type="checkbox" class="input-checkbox"/>
+          Sydney
+        </label>
+        <label>
+          <input name="prefer" value="newYork" type="checkbox" class="input-checkbox"/>
+          New York
+        </label>
+         <label>
+          <input name="prefer" value="barcelona" type="checkbox" class="input-checkbox"/>
+          Barcelona
+        </label>
+        <label>
+          <input name="prefer" value="amsterdan" type="checkbox" class="input-checkbox"/>
+          Amsterdam
+        </label>
+        <label>
+          <input name="prefer" value="tokyo" type="checkbox" class="input-checkbox"/>
+          Tokyo
+        </label>
+
+      </div>
+
+      <div class="form-group">
+        <p>Any comments or suggestions?</p>
+        <textarea id="comments" class="input-textarea" name="comment" placeholder="Enter your comment here..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <button type="submit" id="submit" class="submit-button">
+          Submit
+        </button>
+      </div>
+
+      <div class="footer">
+        <h4>Thank you for taking the time to help us.</h4>
+      </div>
+
+    </form>
+  </div>
+
+  </body>
+</html>
