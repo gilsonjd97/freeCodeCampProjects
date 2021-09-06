@@ -1,0 +1,110 @@
+@font-face {
+	font-family: lemon;
+	src: url(fonts/LEMONMILK-Regular.otf);
+}
+@font-face {
+	font-family: Roboto;
+	src: url(fonts/Roboto-Regular.ttf);
+}
+
+/* INDEX */
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body, html {
+  font-family: Roboto;
+  background-color: black;
+  height: 100%;
+  color: white;
+  text-align: center;
+}
+
+#title {
+  font-size: 5rem;
+  color: white;
+  padding-top: 2rem;
+  font-family: lemon;
+}
+.hr-title {
+  width: 60%;
+  display: block;
+  margin: auto;
+  height: 5px;
+  background-color: white;
+  border: none;
+}
+#image {
+  width: 70%;
+  display: block;
+  margin: auto;
+  margin-top: 2rem;
+}
+#img-caption {
+  color: #333;
+  margin-top: 10px;
+  text-align: center;
+}
+.bio {
+  padding: 2rem 0;
+  background-color: #111;
+}
+.bio h3 {
+  text-transform: uppercase;
+  padding: 1rem 0;
+}
+p {
+  margin: 1rem auto;
+  width: 50%;
+  text-align: justify;
+  color: #999;
+}
+span {
+  font-weight: bold;
+  color: white;
+}
+a {
+  color: greenyellow;
+  text-decoration: none;
+}
+.material-icons {
+  color: black;
+}
+#myBtn {
+  display: none; 
+  position: fixed; 
+  bottom: 20px; 
+  right: 30px; 
+  z-index: 99; 
+  border: none; 
+  outline: none; 
+  background-color: white; 
+  cursor: pointer; 
+  padding: 10px;
+  border-radius: 50px; 
+}
+@media only screen and (max-width: 768px) {
+  #title {
+    font-size: 2rem;
+  }
+  .hr-title {
+    width: 80%;
+  }
+  #image {
+    width: 100%;
+  }
+  p {
+    width: 80%;
+  }
+  .bio h4 {
+    text-align: justify;
+    width: 80%;
+    margin: 0 auto;
+  }
+  #myBtn {
+    padding: 5px;
+    bottom: 10px;
+    right: 10px;
+  }
+} 
