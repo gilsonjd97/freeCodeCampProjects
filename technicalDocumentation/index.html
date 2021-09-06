@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+ 	<head>
+ 		<meta charset="utf-8">
+		<title></title>
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		  
+		<link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	</head>
+	
+	<body>
+
+    <nav id="navbar" class="navbar">
+      <header>Arch Linux Install guide</header>
+      <a href="#overview" class="nav-link">Overview</a>
+      <a href="#partitioning" class="nav-link">Partitioning</a>
+      <a href="#internet_access" class="nav-link">Internet access</a>
+      <a href="#actual_install" class="nav-link">Actual install</a>
+      <a href="#chrooting" class="nav-link">Chrooting</a>
+      <a href="#making_the_system_bootable" class="nav-link">Making the system bootable</a>
+      <a href="#configuring_the_system_so_it's_usable" class="nav-link">Configuring the system so it's usable</a>
+      <a href="#restart" class="nav-link">Restart</a>
+      <a href="#post_installation" class="nav-link">Post-installation</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <span class="material-icons">menu</span>          
+      </a>
+    </nav>
+
+    <script>
+      function myFunction() {
+      var x = document.getElementById("navbar");
+      if (x.className === "navbar") {
+        x.className += " responsive";
+      } else {
+        x.className = "navbar";
+      }
+    }
+    </script>
+
+    <main id="main-doc"> <!-- page's main content -->
+      
+      <section class="main-section" id="overview"> 
+        <header>Overview</header>
+        <hr>
+        <p>
+          Arch Linux is an independently developed, x86-64 general-purpose GNU/Linux distribution that strives to provide the latest stable versions of most software by following a rolling-release model. The default installation is a minimal base system, configured by the user to only add what is purposely required.
+          <br><br>Arch Linux should run on any x86_64-compatible machine with a minimum of 512 MiB RAM, though more memory is needed to boot the live system for installation. A basic installation should take less than 2 GiB of disk space. As the installation process needs to retrieve packages from a remote repository, this guide assumes a working internet connection is available.
+        </p>
+          <div class="alert info">
+            <span class="material-icons">info</span>
+            <p>
+              This turbo install guide makes a lot of assumptions on what you want and doesn't cover many real world setups. 
+              <br>Always follow the <a href="https://wiki.archlinux.org/index.php/Installation_guide" target="_blank">official wiki</a> if in doubt.
+            </p>
+          </div>
+      </section>
+
+      <section class="main-section" id="partitioning">
+        <header>Partitioning</header>
+        <hr>
+        <p>To partition disk, always use <span>cgdisk</span> unless you have a good reason not to. It's just the best, like a 🦈.</p>
+          <div class="alert info">
+            <span class="material-icons">info</span>
+            <p>Find the names of your disks using <span>lsblk</span>.</p>
+          </div>
+        <p>In this guide, the first SATA disk (<span>sda</span>) is used. On a modern computer, you may use <span>nvme0n1</span> or even <span>mmcblk0</span> on embedded systems.</p>
+          <code>
+            # cgdisk /dev/sda
+          </code>
+        <p>Try to make it look something like:</p>
+          <code class="print">
+            /dev/sda1 200M    (ef00) /boot
+            /dev/sda2 $REST_OF_HDD  (8300) /
+          </code>
+        <p>
+          The first partition will store the bootloader and the kernel, and will be read by the UEFI to boot. The second one will contain Arch.
+          <br><br>Format the partitions and mount them.
+        </p>
+          <div class="alert info">
+            <span class="material-icons">info</span>
+            <p>On an SSD, <span>f2fs</span> is recommended instead of <span>ext4</span> for unparalled speed.</p>
+          </div>
+          <code>
+            # mkfs.vfat -F 32 /dev/sda1
+            # mkfs.ext4 /dev/sda2
+
+            # mount /dev/sda2 /mnt
+            # mkdir /mnt/boot
+            # mount /dev/sda1 /mnt/boot
+          </code>
+      </section>
+        
+      <section class="main-section" id="internet_access">
+        <header>Internet access</header>
+        <hr>
+        <p>
+          If Ethernet was plugged in during boot, it will be ready.
+          <br>When plugging it after the fact, it's best to just reboot. Alternatively, run <span>dhcpcd</span>, <span>killall dhpcd</span> and run <span>dhcpcd</span> again to get an IP address. No, that didn't make sense, but it works way too well.
+        </p>
+          <div class="alert warning">
+            <span class="material-icons">warning</span>
+            <p>If a WiFi install is absolutely necessary, run the Arch installer-exclusive <span>wifi-menu</span> tool.</p>
+          </div>
+        <p>Check your internet connectivity with <span>ping</span> before continuing.</p>
+      </section>
+
+      <section class="main-section" id="actual_install">
+        <header>Actual install</header>
+        <hr>
+        <p>To install packages to a folder instead of normally, <span>pacstrap</span> is used. Here a good set of packages to get a running system is provided.</p>
+          <div class="alert info">
+            <span class="material-icons">info</span>
+            <p>
+              This can also be used to fix a broken system, such as one turned off during an update, by reinstalling damaged packages.
+              <br>You can replace the gnome and gnome-extra packages with your favorite desktop environment.
+            </p>
+          </div>
+          <code>
+            # pacstrap /mnt base base-devel linux linux-firmware f2fs-tools nano xorg-server gnome gnome-extra firefox networkmanager htop zsh grml-zsh-config
+          </code>
+      </section>
+
+      <section class="main-section" id="chrooting">
+        <header>Chrooting</header>
+        <hr>
+        <p>
+          <span class="italic">The art of running a process as if it was in another system.</span>
+          <br><br>It's time to enter the freshly installed Arch rootfs!
+        </p>
+          <code>
+              # arch-chroot /mnt /bin/zsh
+          </code>
+      </section>
+
+      <section class="main-section" id="making_the_system_bootable">
+        <header>Making the system bootable</header>
+        <hr>
+        <p>
+          Run <span>bootctl install.</span>
+          <br><br>Systemd-boot will be the bootloader used. It boots entries stored at <span>/boot/loader/entries/</span> and is configured at <span>/boot/loader/loader.conf</span>.
+          <br>Copy an example boot entry to the correct place and then edit it.
+        </p>
+          <code>
+            # cp /usr/share/systemd/bootctl/arch.conf /boot/loader/entries/
+            # nano /boot/loader/entries/arch.conf
+          </code>
+        <p>
+          You will need to edit the <span>options</span> line so your kernel is told where to find your Arch partition.
+          <br>In this guide, the file would end up like this:
+        </p>
+          <code class="print">
+            title   Arch Linux
+            linux   /vmlinuz-linux
+            initrd  /initramfs-linux.img
+            options root=/dev/sda2 rw
+          </code>
+          <div class="alert success">
+            <span class="material-icons">task_alt</span>
+            <p>Once this is done, your Arch install is fully bootable!</p>
+          </div>
+        <p>
+          However, don't reboot just yet. There are still some things to do before getting into a properly running system.
+          <br><br>There is a <a href="#the_partuuid_dilemma">big caveat</a> here which is good to read.
+        </p>
+      </section>
+
+      <section class="main-section" id="configuring_the_system_so_it's_usable">
+        <header>Configuring the system so it's usable</header>
+        <hr>
+        <p>At least a language needs to be generated and set as the preferred system language.</p>
+          <code>
+            # echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
+            # echo LANG=en_US.UTF-8 > /etc/locale.conf
+            # locale-gen
+          </code>
+        <p>Change <span>root</span>'s password and its shell, then add your user and change their password too.</p>
+          <code>
+            # passwd
+            # chsh root -s /bin/zsh
+
+            # useradd -m -G wheel -s /bin/zsh user
+            # passwd user
+          </code>
+        <p>Enable services beofore first bootup, NetworkManager will manage our network interfaces and a graphical login screen provided by GDM will be shown.</p>
+          <code>
+            # systemctl enable NetworkManager gdm
+          </code>
+      </section>
+          
+      <section class="main-section" id="restart">
+        <header>Restart</header>
+        <hr>
+          <div class="alert success">
+            <span class="material-icons">task_alt</span>
+            <p>And we are truly done!</p>
+          </div>
+          <code>
+            # exit
+            # reboot
+          </code>
+      </section>
+
+      <section class="main-section" id="post_installation">
+        <header>Post-installation</header>
+        <hr>
+        <p>
+          <span class="italic">but it sucks, blackscreens and lasts 5 minutes on battery</span>
+          <br><br>Unless some major hardware quirks are happening (damn you, NVIDIA!) you should be able to start using your computer now.
+          <br>What to do now is heavily dependent on your hardware and desktop environment. A few common tips are provided.
+        </p>
+        
+        <h2>Time</h2>
+        <hr class="line">
+        <p>Use the <span>timedatectl</span> tool.</p>
+          <code>
+            # timedatectl set-timezone Europe/Madrid
+            # timedatectl set-ntp true
+          </code>
+            
+        <h2>Sudo doesn't work</h2>
+        <hr class="line">
+        <p>
+          It works, you are just not allowed to use it.
+          <br>Login as root and edit <span>/etc/sudoers</span>.
+        </p>
+          <code>
+            # nano /etc/sudoers
+          </code>
+        <p>Uncomment (remove the #) from this line near the end of the file.</p>
+          <code class="print">
+            # %whell ALL=(ALL) ALL
+          </code>
+            
+        <h2>Bluetooth doesn't even exist</h2>
+        <hr class="line">
+        <p>
+          Install <span>bluez</span> and <span>bluez-utils</span> and enable the service <span>systemctl enable --now bluetooth</span>.
+          <br><br>Bluetooth audio needs <span>pulseaudio-bluetooth</span>.
+          <br>When using a minimal desktop environment you can try some of the applets such as <span>blueman</span> or <span>gnome-bluetooth</span> to control it.
+        </p>
+            
+        <h2>Audio in general</h2>
+        <hr class="line">
+        <p>
+          Always install <span>pavucontrol</span> to completely manage your audio needs.
+          <br><br>Mics by default come muted. Unmute it and/or boost it.
+          <br>A similar deal happens with bluetooth audio, by default it runs on basically analog phone emulation mode. Change to high quality audio profile to not instantly die upon music playback.
+        </p>
+            
+        <h2>Battery life is nonexistent</h2>
+        <hr class="line">
+        <p>
+          The TLP daemon tunes tunables inside the heavily tunable Linux kernel so you have a semblance of battery life. You can also install it in normal desktops and it makes some difference in wall power draw.
+          <br><br>Install <span>tlp</span> and enable it, which is quirky.
+        </p>
+          <code>
+            # systemctl enable --now tlp
+            # systemctl mask systemd-rfkill systemd-rfkill.socket
+          </code>
+            
+        <h2 id="the_partuuid_dilemma">The PARTUUID dilemma</h2>
+        <hr class="line">
+          <div class="alert danger">
+            <span class="material-icons">highlight_off</span>
+            <p>
+              Using partition names to boot instead of their unique identifiers will cause the OS not to boot if (when) the partition count or disk order of the computer changes.
+              <br>It may change even across reboots. To avoid this issue, extract your partition's <span>PARTUUID</span> using <span>blkid</span> and edit your options line accordingly.
+            </p>
+          </div>
+          <code class="print">
+            title   Arch Linux
+            linux   /vmlinuz-linux
+            initrd  /initramfs-linux.img
+            options root=PARTUUID="9b505600-2d6a-3660-b0c3-d2dfd653c5fd" rw
+          </code>
+          <div class="alert info">
+            <span class="material-icons">info</span>
+            <p>
+              As long as your firmware doesn't change disk order randomly, and you know what to touch if it breaks, you can ignore this.
+              <br><span class="italic">For now.</span>
+            </p>
+          </div>
+            
+        <h2>NVIDIA Optimus</h2>
+        <hr class="line">
+        <p>
+          Install <span>nvidia</span> and <span>nvidia-utils</span> as normal.
+          <br><br>These by default will hijack your screen and run everything with the NVIDIA card. The NVIDIA control panel allows you to turn the GPU off completely.
+        </p>
+          <div class="alert warning">
+            <span class="material-icons">warning</span>
+            <p>However, this doesn't really work on some laptops, which will just blackscreen or exhibit buggy behavior.Plus, it drains the battery pretty much instantly.</p>
+          </div>
+        <p>Install <span>bumblebee</span> so the integrated graphics have priority and activate its service:</p>
+          <code>
+            # systemctl enable bumblebeed
+          </code>
+        <p>You will need to add your user to the <span>bumblebee</span> group. Run:</p>
+          <code>
+            # gpasswd -a yourusername bumblebee
+          </code>
+        <p>
+          To run programs with the NVIDIA card, run <span>optirun program</span>. For Steam games, change their executable command line to <span>optirun %command%</span>.
+          <br><br>Finally, to allow the card to turn off completely when unused, install <span>bbswitch</span>.
+        </p>
+          <div class="alert danger">
+            <span class="material-icons">highlight_off</span>
+            <p>
+              Even LESS laptops will like that. The workaround involves editing your kernel cmdline options to blacklist a little bit of Windows-specific BIOS code.
+              <br>Try adding <span>acpi_osi=! acpi_osi="Windows 2012"</span>. Try with 2009 or 2015 instead for 9xxm and 20xx series respectively if it doesn't work.
+            </p>
+          </div>
+        <p>More information <a href="https://wiki.archlinux.org/title/NVIDIA_Optimus" target="_blank">can be found here</a>.
+        <br><br>*This guide is only an imitation for this project, the original is <a href="https://fosc.space/" target="_blank">here</a>.</p>
+      </section>
+
+    </main>
+	</body>
+</html>
