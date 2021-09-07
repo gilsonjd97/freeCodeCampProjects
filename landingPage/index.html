@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+ 	<head>
+ 		<meta charset="utf-8">
+		<title></title>
+
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		  
+		<link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	</head>
+	
+	<body>
+
+    <header id="header">
+      <div id="header-logo">
+        <a href="#home"><img src="img/logo_white.png" id="header-img" alt="image logo"></a>
+      </div>
+      <nav id="nav-bar" class="nav-bar">
+        <a href="#overview" class="nav-link">OVERVIEW</a>
+        <a href="#price" class="nav-link">PRICE</a>
+        <a href="#contact" class="nav-link">CONTACT</a>
+      </nav>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+      </a>
+    </header>
+
+    <section id="home">
+      <div class="video-container">
+        <video id="video" autoplay muted loop>
+          <source src="img/2077.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <span id="overview"></span>
+      <h1 id="overview">Play the most demanding PC games and seamlessly across your devices.</h1>
+      <p>More than 100 games from every genre, with new games added all the time.</p>
+    </section>
+
+    <section id="games">
+      <div class="container-games">
+        <div>
+          <img src="img/games/monster-hunter-world-cover.jpg">
+        </div>
+        <div>
+          <img src="img/games/biomutant-cover.jpg">
+        </div>
+        <div>
+          <img src="img/games/dead-by-daylight-cover.jpg">
+        </div>
+        <div>
+          <img src="img/games/little-nightmares-ii-cover.jpg">
+        </div>
+        <div>
+          <img src="img/games/sea-of-thieves-pc-xbox-one-cover.jpg">
+        </div>
+        <div>
+          <img src="img/games/the-crew-2-cover.jpg">
+        </div>
+        <div>
+          <img src="img/games/los-sims-4-cover.jpg">
+        </div>
+        <div>
+          <img src="img/games/tom-clancys-rainbow-six-siege-cover.jpg">
+        </div>
+      </div>
+      <a href="#Explore"><button>More &#8250</button></a>
+    </section>
+
+    <section id="price">
+      <h1>Choose the plan for you</h1>
+      <div class="price-flex">
+        <div class="lista">
+          <ul>
+            <li class="free">Free</li>
+            <li class="grey">$ 0.00 / month</li>
+            <li>Basic Access</li>
+            <li>2 hours/day</li>
+            <a href="#" class="join"><li>Join now &#8250</li></a>
+          </ul>
+        </div>
+        <div class="lista">
+          <ul>
+            <li class="standard">Standard</li>
+            <li class="grey">$ 4.99 / month</li>
+            <li>Standard Access</li>
+            <li>Unlimited Time</li>
+            <a href="#" class="join"><li>Join now &#8250</li></a>
+          </ul>
+        </div>
+        <div class="lista">
+        <ul>
+          <li class="premium">Premium</li>
+          <li class="grey">$ 9.99 / month</li>
+          <li>Ultimate Access</li>
+          <li>Unlimited Time</li>
+          <a href="#" class="join"><li>Join now &#8250</li></a>
+        </ul>
+        </div>
+      </div>
+      <p>*Billing begins immediately upon enrollment. Priority subscription price will be 
+        billed monthly or annually, depending on the plan selected, and will end upon 
+        cancellation of the subscription. Users may cancel at any time. 
+      </p>
+    </section>
+
+    
+    <section id="contact">
+      <h1>Contact us</h1>
+      <p>If you have any questions or suggestions you can leave us your email in the following form and we will contact you as soon as possible.</p>
+      <form action="https://www.freecodecamp.org/email-submit">
+
+        <label for="fname"></label>
+        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        <br>
+        <label for="email"></label>
+        <input type="email" placeholder="Enter Email" name="email" id="email" required>
+        <br>
+        <label for="subject"></label>
+        <textarea id="subject" name="subject" placeholder="Write something.."></textarea>
+    
+        <input type="submit" value="Submit">
+    
+      </form>
+    </section>
+
+    <footer>
+      <h3>FreeCode<span>Camp</span> &copy; 2021 <a href="#home"><i class="material-icons">arrow_upward</i></a></h3>
+    </footer>
+    
+	</body> 
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("nav-bar");
+      if (x.className === "nav-bar") {
+        x.className += " responsive";
+      } else {
+        x.className = "nav-bar";
+      }
+    } 
+  </script>
+
+</html>
